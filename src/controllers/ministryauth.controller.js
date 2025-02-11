@@ -1,5 +1,7 @@
 import bcrypt from "bcryptjs";
 import Ministry from "../models/ministry.model";
+import { configDotenv } from "dotenv";
+configDotenv();
 export const signup = async (req, res) => {
   try {
     const { departmentalname, departmentalid, password } = req.body;

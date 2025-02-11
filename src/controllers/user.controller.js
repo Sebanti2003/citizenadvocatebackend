@@ -1,5 +1,6 @@
+import { configDotenv } from "dotenv";
 import User from "../models/user.model";
-
+configDotenv();
 export const getuserinfo = async (req, res) => {
   try {
     const user = req.user;
