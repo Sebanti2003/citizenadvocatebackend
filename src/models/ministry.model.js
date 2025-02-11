@@ -10,6 +10,7 @@ const ministrySchema = new mongoose.Schema(
       unique: [true, "Department ID must be unique"] 
     },
     password: { type: String, required: [true, "Password is required"] },
+    role: { type: String, default: "ministry" },
   },
   { timestamps: true }
 );

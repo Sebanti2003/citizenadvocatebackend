@@ -11,6 +11,7 @@ const userschema = new mongoose.Schema(
     },
     password: { type: String, required: [true, "Password is required"] },
     state: { type: String, required: [true, "State is required"] },
+    role: { type: String, default: "user" },
     phonenumber: {
       type: String,
       required: [true, "Phone number is required"],

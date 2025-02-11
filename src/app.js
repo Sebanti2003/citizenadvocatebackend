@@ -5,6 +5,8 @@ import morgan from "morgan";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { configDotenv } from "dotenv";
+import userrouter from "./routes/user.route.js";
+import ministryrouter from "./routes/ministry.route.js";
 configDotenv();
 // console.log('====================================');
 // console.log(process.env.MONGO_URL);
@@ -52,8 +54,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/api/v1/user", userrouter);
+app.use("/api/v1/ministry", ministryrouter);
 
 export default app;
