@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import Ministry from "../models/ministry.model";
+import Ministry from "../models/ministry.model.js";
 import { configDotenv } from "dotenv";
 configDotenv();
 export const signup = async (req, res) => {

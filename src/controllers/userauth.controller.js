@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 configDotenv();
 export const signup = async (req, res) => {

@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import Ministry from "../models/ministry.model";
+import Ministry from "../models/ministry.model.js";
 configDotenv();
 export const getministryinfo = async (req, res) => {
   try {

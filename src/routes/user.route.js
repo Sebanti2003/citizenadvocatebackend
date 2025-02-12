@@ -1,8 +1,8 @@
 import express from "express";
-import { login, logout, signup } from "../controllers/userauth.controller";
-import { userroleCheck } from "../middlewares/rolecheck.middleware";
-import { sessionProtected } from "../middlewares/cookieprotected.middleware";
-import { getuserinfo } from "../controllers/user.controller";
+import { login, logout, signup } from "../controllers/userauth.controller.js";
+import { userroleCheck } from "../middlewares/rolecheck.middleware.js";
+import { sessionProtected } from "../middlewares/cookieprotected.middleware.js";
+import { getuserinfo } from "../controllers/user.controller.js";
 const router = express.Router();
 
 router.route("/auth/signup").post(signup);

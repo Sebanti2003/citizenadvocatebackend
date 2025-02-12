@@ -1,8 +1,8 @@
 import express from "express";
-import { login, logout, signup } from "../controllers/ministryauth.controller";
-import { ministryroleCheck } from "../middlewares/rolecheck.middleware";
-import { sessionProtected2 } from "../middlewares/cookieprotected.middleware";
-import { getministryinfo } from "../controllers/ministry.controller";
+import { login, logout, signup } from "../controllers/ministryauth.controller.js";
+import { ministryroleCheck } from "../middlewares/rolecheck.middleware.js";
+import { sessionProtected2 } from "../middlewares/cookieprotected.middleware.js";
+import { getministryinfo } from "../controllers/ministry.controller.js";
 const router = express.Router();
 
 router.route("/auth/signup").post(signup);
