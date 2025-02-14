@@ -16,26 +16,6 @@ const ministrySchema = new mongoose.Schema(
 );
 
 // Hash password before saving
-ministrySchema.pre("save", function (next) {
-  if (this.isModified("password")) {
-    this.password = bcrypt.hashSync(this.password, 10);
-  }
-  next();
-});
-
-// Compare password method
-ministrySchema.methods.comparePassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
-
-// Static methods to find by ID or department name
-ministrySchema.statics.findByDepartmentalId = function (departmentalid) {
-  return this.findOne({ departmentalid });
-};
-
-ministrySchema.statics.findByDepartmentalName = function (departmentalname) {
-  return this.findOne({ departmentalname });
-};
 
 const Ministry = mongoose.model("Ministry", ministrySchema);
 

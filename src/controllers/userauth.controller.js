@@ -29,6 +29,7 @@ export const signup = async (req, res) => {
     }
     const hashsalt = await bcrypt.genSaltSync(10);
     const hashedPassword = await bcrypt.hashSync(password, hashsalt);
+
     const user = await User.create({
       name,
       email,
@@ -70,14 +71,20 @@ export const login = async (req, res) => {
         success: false,
       });
     }
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compareSync(password, user.password);
     if (!isValidPassword) {
       return res.status(400).json({
-        message: "Invalid password",
+        message: "Invalid email or password",
         success: false,
       });
     }
-    req.session.user = user;
+    req.session.user = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      state: user.state,
+      phonenumber: user.phonenumber,
+    };
     return res.status(200).json({
       message: "User logged in successfully",
       success: true,

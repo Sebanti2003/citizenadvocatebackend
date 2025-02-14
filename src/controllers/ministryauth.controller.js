@@ -5,6 +5,7 @@ configDotenv();
 export const signup = async (req, res) => {
   try {
     const { departmentalname, departmentalid, password } = req.body;
+
     if (!departmentalname) {
       return res.status(400).json({ message: "Departmental name is required" });
     }
@@ -14,14 +15,16 @@ export const signup = async (req, res) => {
     if (!password) {
       return res.status(400).json({ message: "Password is required" });
     }
-    const hashsalt = await bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, hashsalt);
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const newministry = await Ministry.create({
-      departmentalname: departmentalname,
-      departmentalid: departmentalid,
+      departmentalname,
+      departmentalid,
       password: hashedPassword,
     });
+
     return res.status(201).json({
       message: "Ministry created successfully",
       ministrymessage: `Ministry ${newministry.departmentalname} created successfully`,
@@ -35,24 +38,30 @@ export const signup = async (req, res) => {
     });
   }
 };
+
 export const login = async (req, res) => {
   try {
     const { departmentalid, password } = req.body;
+
     if (!departmentalid) {
       return res.status(400).json({ message: "Departmental ID is required" });
     }
     if (!password) {
       return res.status(400).json({ message: "Password is required" });
     }
-    const ministry = await Ministry.findOne({ departmentalid: departmentalid });
+
+    const ministry = await Ministry.findOne({ departmentalid });
     if (!ministry) {
       return res.status(404).json({ message: "Ministry not found" });
     }
-    const isValidPassword = bcrypt.compareSync(password, ministry.password);
+
+    const isValidPassword = await bcrypt.compare(password, ministry.password);
     if (!isValidPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
+
     req.session.ministry = ministry;
+
     return res.status(200).json({
       message: "Ministry login successful",
       ministrymessage: `Ministry ${ministry.departmentalname} logged in successfully`,

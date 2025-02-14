@@ -7,6 +7,7 @@ import MongoStore from "connect-mongo";
 import { configDotenv } from "dotenv";
 import userrouter from "./routes/user.route.js";
 import ministryrouter from "./routes/ministry.route.js";
+import complaintrouter from "./routes/complaints.route.js";
 configDotenv();
 // console.log('====================================');
 // console.log(process.env.MONGO_URL);
@@ -56,5 +57,10 @@ app.use(
 
 app.use("/api/v1/user", userrouter);
 app.use("/api/v1/ministry", ministryrouter);
+app.use("/api/v1/complaints", complaintrouter);
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
 
 export default app;

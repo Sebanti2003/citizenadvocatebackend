@@ -18,12 +18,9 @@ const complaintSchema = new mongoose.Schema(
       enum: ["pending", "resolved", "rejected"],
       default: "pending",
     },
-    type: {
-      type: String,
-      required: true,
-    },
     category: {
       type: String,
+      required: true,
     },
     trainNumber: {
       type: String,

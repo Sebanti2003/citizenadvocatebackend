@@ -23,22 +23,6 @@ const userschema = new mongoose.Schema(
     timestamps: true,
   }
 );
-userschema.pre("save", function (next) {
-  const user = this;
-  if (user.isModified("password")) {
-    user.password = bcrypt.hashSync(user.password, 10);
-  }
-  next();
-});
-userschema.methods.comparePassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
-userschema.statics.findByEmail = function (email) {
-  return this.findOne({ email });
-};
-userschema.statics.findByPhoneNumber = function (phonenumber) {
-  return this.findOne({ phonenumber });
-};
 
 const User = mongoose.model("User", userschema);
 

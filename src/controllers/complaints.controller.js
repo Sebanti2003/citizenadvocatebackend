@@ -2,10 +2,9 @@ import Complaint from "../models/complaint.model.js";
 
 export const ministryofrailwaypostcomplaint = async (req, res) => {
   try {
+    const person = req.user.id;
     const {
-      person,
-      ministry,
-      type,
+      ministry = "67aee41086592d8fcba8cf30",
       trainNumber,
       trainName,
       pnr,
@@ -16,8 +15,6 @@ export const ministryofrailwaypostcomplaint = async (req, res) => {
     } = req.body;
     if (
       !person ||
-      !ministry ||
-      !type ||
       !trainNumber ||
       !trainName ||
       !pnr ||
@@ -31,7 +28,6 @@ export const ministryofrailwaypostcomplaint = async (req, res) => {
     const newcomplaint = await Complaint.create({
       person,
       ministry,
-      type,
       trainNumber,
       trainName,
       pnr,
@@ -45,6 +41,9 @@ export const ministryofrailwaypostcomplaint = async (req, res) => {
       complaint: newcomplaint,
     });
   } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
     res.status(500).json({
       message: "Error creating complaint realted to railway, try again later",
     });
@@ -52,10 +51,9 @@ export const ministryofrailwaypostcomplaint = async (req, res) => {
 };
 export const getallcomplaints = async (req, res) => {
   try {
-    const allcomplaints = await Complaint.find({}).sort({ createdAt: -1 });
+    const allcomplaints = await Complaint.find({}).sort({ createdAt: -1 }).populate("person ministry");
     res.status(200).json(allcomplaints);
   } catch (error) {
     res.status(500).json({ message: "Error fetching complaints" });
   }
-}
-
+};

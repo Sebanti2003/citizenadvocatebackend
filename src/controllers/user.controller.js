@@ -4,7 +4,7 @@ configDotenv();
 export const getuserinfo = async (req, res) => {
   try {
     const user = req.user;
-    const usernew = await User.findById(user._id);
+    const usernew = await User.findById(user.id);
     if (!user) {
       return res
         .status(404)
