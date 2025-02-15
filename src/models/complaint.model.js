@@ -22,6 +22,7 @@ const complaintSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    //railway
     trainNumber: {
       type: String,
     },
@@ -29,6 +30,41 @@ const complaintSchema = new mongoose.Schema(
       type: String,
     },
     pnr: {
+      type: String,
+    },
+    //education
+    institutionid: {
+      type: String,
+    },
+    intitutionname: {
+      type: String,
+    },
+    //road transport and highways
+    transportservicenumber: {
+      type: String,
+    },
+    transportservicename: {
+      type: String,
+    },
+    //consumer affairs
+    productid: {
+      type: String,
+    },
+    productname: {
+      type: String,
+    },
+    //health and family welfare
+    hospitalid: {
+      type: String,
+    },
+    hospitalname: {
+      type: String,
+    },
+    //women and children development
+    issuecode: {
+      type: String,
+    },
+    issuetype: {
       type: String,
     },
     date: {

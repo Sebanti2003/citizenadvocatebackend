@@ -24,3 +24,18 @@ export const getministryinfo = async (req, res) => {
     });
   }
 };
+export const getallministries = async (req, res) => {
+  try {
+    const ministries = await Ministry.find({}).sort({ createdAt: -1 });
+    res
+      .status(200)
+      .json({
+        message: "Ministries fetched successfully",
+        numberofministries: ministries.length,
+        ministries,
+        success: true,
+      });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching ministries" });
+  }
+};

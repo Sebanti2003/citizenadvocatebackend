@@ -16,6 +16,11 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "Password is required" });
     }
 
+    const existingMinistry = await Ministry.findOne({ departmentalid });
+    if (existingMinistry) {
+      return res.status(400).json({ message: "Ministry already exists" });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
