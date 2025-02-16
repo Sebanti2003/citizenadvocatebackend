@@ -1,5 +1,6 @@
 import Complaint from "../models/complaint.model.js";
 import Ministry from "../models/ministry.model.js";
+
 export const ministryofrailwaypostcomplaint = async (req, res) => {
   try {
     const person = req.user.id;
@@ -304,21 +305,52 @@ export const getallcomplaints = async (req, res) => {
   }
 };
 
-export const getdepartmentalcomplaints = async (req, res) => {
-  try {
-    const departmentalid = req.ministry._id;
-    const department = await Ministry.findById(departmentalid);
-    const deparmentalcomplaints = await Complaint.find({
-      ministry: departmentalid,
-    }).populate("person ministry");
-    res.status(200).json({
-      message: `${department.departmentalname} Complaints fetched successfully`,
-      complaints: deparmentalcomplaints,
-    });
-  } catch (error) {
-    res.status(500).json({ message: `Error fetching departmental complaints` });
-  }
-};
+import mongoose from "mongoose";
+import Ministry from "../models/Ministry.js";
+import Complaint from "../models/Complaint.js";
+
+// export const getdepartmentalcomplaints = async (req, res) => {
+//   try {
+//     const departmentalid = req.ministry._id;
+
+//     // Fetch department details
+//     const department = await Ministry.findById(departmentalid);
+//     if (!department) {
+//       return res.status(404).json({ message: "Department not found" });
+//     }
+
+//     // Aggregation pipeline
+//     const complaintsData = await Complaint.aggregate([
+//       { $match: { ministry: new mongoose.Types.ObjectId(departmentalid) } },
+//       {
+//         $group: {
+//           _id: "$category",
+//           count: { $sum: 1 },
+//           complaints: { $push: "$$ROOT" },
+//         },
+//       },
+//       { $sort: { count: -1 } },
+//       {
+//         $project: {
+//           _id: 0,
+//           category: "$_id",
+//           count: 1,
+//           complaints: 1,
+//         },
+//       },
+//     ]);
+
+//     res.status(200).json({
+//       message: `${department.departmentalname} Complaints fetched successfully`,
+//       categories: complaintsData.map((data) => data.category),
+//       complaints: complaintsData,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error fetching departmental complaints" });
+//   }
+// };
+
 export const delcomplaint = async (req, res) => {
   try {
     const complaint = req.params.id;
