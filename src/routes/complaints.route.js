@@ -1,6 +1,8 @@
 import express from "express";
 import {
+  delcomplaint,
   getallcomplaints,
+  getdepartmentalcomplaints,
   ministryofConsumerAffairspostcomplaint,
   ministryofeducationpostcomplaint,
   ministryofHealthFamilyWelfarepostcomplaint,
@@ -8,13 +10,11 @@ import {
   ministryofroadtransportandhighwayspostcomplaint,
   ministryofWomenandChildrenDevelopmentpostcomplaint,
 } from "../controllers/complaints.controller.js";
-import { sessionProtected } from "../middlewares/cookieprotected.middleware.js";
+import { sessionProtected, sessionProtected2 } from "../middlewares/cookieprotected.middleware.js";
 
 const router = express.Router();
-
-router.route("/").get((req, res) => {
-  res.send("Complaints");
-});
+router.route("/getallcomplaints").get(getallcomplaints);
+router.route("/delecomplaint/:id").delete(delcomplaint);
 router
   .route("/ministryofrailwaypostcomplaint")
   .post(sessionProtected, ministryofrailwaypostcomplaint);
@@ -33,6 +33,8 @@ router
 router
   .route("/ministryofroadtransportandhighwayspostcomplaint")
   .post(sessionProtected, ministryofroadtransportandhighwayspostcomplaint);
-router.route("/getallcomplaints").get(getallcomplaints);
+
+router.route("/eachDepartmentalComplaints/:departmentalid").get(sessionProtected2,getdepartmentalcomplaints);
+
 
 export default router;

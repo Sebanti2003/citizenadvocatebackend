@@ -1,5 +1,5 @@
 import Complaint from "../models/complaint.model.js";
-
+import Ministry from "../models/ministry.model.js";
 export const ministryofrailwaypostcomplaint = async (req, res) => {
   try {
     const person = req.user.id;
@@ -144,7 +144,10 @@ export const ministryofeducationpostcomplaint = async (req, res) => {
     });
   }
 };
-export const ministryofroadtransportandhighwayspostcomplaint = async (req, res) => {
+export const ministryofroadtransportandhighwayspostcomplaint = async (
+  req,
+  res
+) => {
   try {
     const person = req.user.id;
     const {
@@ -268,8 +271,8 @@ export const ministryofWomenandChildrenDevelopmentpostcomplaint = async (
     const newcomplaint = await Complaint.create({
       person,
       ministry,
-     issuecode,
-     issuetype,
+      issuecode,
+      issuetype,
       date,
       category,
       description,
@@ -284,7 +287,8 @@ export const ministryofWomenandChildrenDevelopmentpostcomplaint = async (
     console.log(error);
     console.log("====================================");
     res.status(500).json({
-      message: "Error creating complaint realted to women and children, try again later",
+      message:
+        "Error creating complaint realted to women and children, try again later",
     });
   }
 };
@@ -297,5 +301,32 @@ export const getallcomplaints = async (req, res) => {
     res.status(200).json(allcomplaints);
   } catch (error) {
     res.status(500).json({ message: "Error fetching complaints" });
+  }
+};
+
+export const getdepartmentalcomplaints = async (req, res) => {
+  try {
+    const departmentalid = req.ministry._id;
+    const department = await Ministry.findById(departmentalid);
+    const deparmentalcomplaints = await Complaint.find({
+      ministry: departmentalid,
+    }).populate("person ministry");
+    res.status(200).json({
+      message: `${department.departmentalname} Complaints fetched successfully`,
+      complaints: deparmentalcomplaints,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `Error fetching departmental complaints` });
+  }
+};
+export const delcomplaint = async (req, res) => {
+  try {
+    const complaint = req.params.id;
+    const com = await Complaint.findByIdAndDelete(complaint);
+    res
+      .status(200)
+      .json({ message: "Complaint deleted successfully", complaint: com });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting complaint" });
   }
 };
