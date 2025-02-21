@@ -5,7 +5,9 @@ configDotenv();
 export const signup = async (req, res) => {
   try {
     const { departmentalname, departmentalid, password } = req.body;
-
+    console.log('====================================');
+    console.log(departmentalname, departmentalid, password);
+    console.log('====================================');
     if (!departmentalname) {
       return res.status(400).json({ message: "Departmental name is required" });
     }
@@ -18,7 +20,7 @@ export const signup = async (req, res) => {
 
     const existingMinistry = await Ministry.findOne({ departmentalid });
     if (existingMinistry) {
-      return res.status(400).json({ message: "Ministry already exists" });
+      return res.status(200).json({ message: "Ministry already exists",success:true });
     }
 
     const salt = await bcrypt.genSalt(10);
